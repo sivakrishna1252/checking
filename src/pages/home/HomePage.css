@@ -33,7 +33,7 @@
 .hero {
     position: relative;
     /* Hero should be full height on larger screens */
-    min-height: 100vh;
+    min-height: 85vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -251,6 +251,8 @@
         padding: 0 8px;
         flex: 0 0 100%;
     }
+
+
 }
 
 /* Pagination Dots */
@@ -309,6 +311,20 @@
     background-color: var(--color-bg);
     padding: var(--spacing-xxl) 0;
 }
+
+/* Logic to show 4 posts ONLY on iPad Mini/Tablet */
+.blog-grid>*:nth-child(4) {
+    display: none;
+    /* Hide 4th post by default (Mobile) */
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .blog-grid>*:nth-child(4) {
+        display: block;
+        /* Show 4th post ONLY on Tablet */
+    }
+}
+
 
 /* ===== CTA Section (Lite Gold) ===== */
 .cta-section {
@@ -419,8 +435,12 @@
 .about-text-body p {
     font-size: 1.05rem;
     color: var(--color-text-light);
-    line-height: 1.8;
     margin-bottom: var(--spacing-md);
+    text-align: justify;
+    text-justify: inter-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
 }
 
 .about-stats-row {
@@ -529,28 +549,8 @@
         width: auto;
     }
 
-    .about-content {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: var(--spacing-xxl);
-        align-items: start;
-    }
-
-    .about-preview .section-title {
-        text-align: left;
-        margin-top: 0;
-        padding-bottom: var(--spacing-sm);
-        /* Tighten up */
-    }
-
-    .about-preview .section-title::after {
-        left: 0;
-        transform: none;
-        bottom: 0;
-    }
-
-    .about-content-grid {
-        align-items: start;
+    .hero-buttons .btn {
+        width: auto;
     }
 }
 
@@ -566,5 +566,28 @@
 
     .about-preview .section-title {
         font-size: 3rem;
+    }
+
+    .about-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-xxl);
+        align-items: start;
+    }
+
+    .about-preview .section-title {
+        text-align: left;
+        margin-top: 0;
+        padding-bottom: var(--spacing-sm);
+    }
+
+    .about-preview .section-title::after {
+        left: 0;
+        transform: none;
+        bottom: 0;
+    }
+
+    .about-content-grid {
+        align-items: start;
     }
 }

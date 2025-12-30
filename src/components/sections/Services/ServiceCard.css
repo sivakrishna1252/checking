@@ -4,11 +4,16 @@
   width: 100%;
   aspect-ratio: 3 / 4;
   /* Portrait card aspect ratio */
-  border-radius: 20px;
+  border-radius: 24px;
+  /* Increased slightly */
   overflow: hidden;
   box-shadow: var(--shadow-md);
   transition: transform var(--transition-normal), box-shadow var(--transition-normal);
   cursor: pointer;
+  backface-visibility: hidden;
+  /* Fix for shadow radius rendering */
+  transform: translate3d(0, 0, 0);
+  /* Force GPU to respect radius on shadow */
 }
 
 .service-card:hover {

@@ -10,33 +10,35 @@ function BlogPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await fetch(API_URL);
-        if (response.ok) {
-          const realData = await response.json();
-          if (realData.length > 0) {
-            // Priority: Real blogs at start, fill remaining with mock blogs
-            // This replaces mock posts one-by-one
-            const combined = [...realData, ...mockBlogPosts.slice(realData.length)];
-            setBlogs(combined);
+  /*Backende integration part
+    useEffect(() => {
+      const fetchBlogs = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+          const response = await fetch(API_URL);
+          if (response.ok) {
+            const realData = await response.json();
+            if (realData.length > 0) {
+              // Priority: Real blogs at start, fill remaining with mock blogs
+              // This replaces mock posts one-by-one
+              const combined = [...realData, ...mockBlogPosts.slice(realData.length)];
+              setBlogs(combined);
+            }
+          } else {
+            setError(`Server responded with status ${response.status}`);
           }
-        } else {
-          setError(`Server responded with status ${response.status}`);
+        } catch (err) {
+          console.log('Backend unreachable, using mock data', err);
+          setError(err?.message || 'Backend unreachable');
+        } finally {
+          setLoading(false);
         }
-      } catch (err) {
-        console.log('Backend unreachable, using mock data', err);
-        setError(err?.message || 'Backend unreachable');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBlogs();
-  }, []);
+      };
+  
+      fetchBlogs();
+    }, []);
+  */
 
   return (
     <div className="blog-page">

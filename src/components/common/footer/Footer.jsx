@@ -78,10 +78,10 @@ function Footer() {
             <div className="footer-section">
               <h4>Quick links</h4>
               <nav className="footer-nav">
-                <Link to="/">Home</Link>
-                <Link to="/Gallery">Gallery</Link>
-                <Link to="/Blog">Blog</Link>
-                <Link to="/Contact">Contact</Link>
+                <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Home</Link>
+                <Link to="/Gallery" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Gallery</Link>
+                <Link to="/Blog" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Blog</Link>
+                <Link to="/Contact" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Contact</Link>
               </nav>
             </div>
 
@@ -96,7 +96,7 @@ function Footer() {
                   </p>
                   <p className="footer-contact-item">
                     <Mail size={18} />
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sivatools1252@gmail.com">
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eandldecoreandmore@gmail.com">
                       eandldecoreandmore@gmail.com
                     </a>
                   </p>

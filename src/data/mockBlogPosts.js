@@ -5,11 +5,11 @@ export const mockBlogPosts = [
     excerpt: "Planning a corporate event requires attention to detail and strategic thinking. Here are our top 10 tips to ensure your event is a success.",
     content: `
       <p>Planning a corporate event requires attention to detail and strategic thinking. Whether it's a product launch, a team-building retreat, or an annual gala, the success of your event depends on careful preparation.</p>
-      <h3>1. Define Your Objectives</h3>
+      <h3>Define Your Objectives</h3>
       <p>Before you start planning, clearly define what you want to achieve. Is it to reward employees, launch a new product, or build brand awareness? Having a clear goal will guide all your decisions.</p>
-      <h3>2. Set a Realistic Budget</h3>
+      <h3>Set a Realistic Budget</h3>
       <p>Determine your budget early on and stick to it. Allocate funds for venue, catering, entertainment, and marketing. Keep a contingency fund for unexpected expenses.</p>
-      <h3>3. Choose the Right Venue</h3>
+      <h3>Choose the Right Venue</h3>
       <p>The venue sets the tone for your event. Consider the location, capacity, and amenities. Make sure it aligns with your brand image and is easily accessible for your guests.</p>
       <p>Stay tuned for the rest of our tips in the next blog post! Planning a successful corporate event is a journey, not a destination.</p>
     `,

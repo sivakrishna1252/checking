@@ -15,29 +15,32 @@ function BlogDetailPage() {
   const [loading, setLoading] = useState(!initialPost);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const response = await fetch(`${API_BASE_URL}${id}/`);
-        if (response.ok) {
-          const data = await response.json();
-          setPost(data);
-          setLoading(false);
-        } else if (!initialPost) {
-          // If not found in API and no mock data, show error
-          throw new Error('Post not found');
+  /* Backend integration part
+  
+    useEffect(() => {
+      const fetchPost = async () => {
+        try {
+          const response = await fetch(`${API_BASE_URL}${id}/`);
+          if (response.ok) {
+            const data = await response.json();
+            setPost(data);
+            setLoading(false);
+          } else if (!initialPost) {
+            // If not found in API and no mock data, show error
+            throw new Error('Post not found');
+          }
+        } catch (err) {
+          if (!initialPost) {
+            console.error('Error fetching blog post:', err);
+            setError(err.message);
+            setLoading(false);
+          }
         }
-      } catch (err) {
-        if (!initialPost) {
-          console.error('Error fetching blog post:', err);
-          setError(err.message);
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchPost();
-  }, [id, initialPost]);
+      };
+  
+      fetchPost();
+    }, [id, initialPost]);
+  */
 
   const formatDate = (dateString) => {
     if (!dateString) return '';

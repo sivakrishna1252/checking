@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 import './ContactPage.css';
 
 // API URL - change this to your production URL when deploying
@@ -16,19 +17,44 @@ function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const [recaptchaValue, setRecaptchaValue] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
+
+    // For phone number, check for non-numeric characters
+    if (name === 'phone') {
+      const isNumeric = /^[0-9\s-]*$/.test(value);
+      if (!isNumeric) {
+        // If user types non-numeric, show error but don't update value (or strip it)
+        setErrors(prev => ({
+          ...prev,
+          phone: 'Please enter numbers only'
+        }));
+        // Optionally strip the bad chars so the input remains clean
+        const cleaned = value.replace(/[^\d\s-]/g, '');
+        setFormData(prev => ({ ...prev, [name]: cleaned }));
+      } else {
+        // Valid input
+        setFormData(prev => ({ ...prev, [name]: value }));
+        // Clear error if it was "Please enter numbers only" or empty
+        if (errors.phone) {
+          setErrors(prev => ({ ...prev, phone: '' }));
+        }
+      }
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+      // Clear error when user starts typing for other fields
+      if (errors[name]) {
+        setErrors(prev => ({ ...prev, [name]: '' }));
+      }
+    }
+  };
+
+  const handleRecaptchaChange = (value) => {
+    setRecaptchaValue(value);
+    if (errors.recaptcha) {
+      setErrors(prev => ({ ...prev, recaptcha: '' }));
     }
   };
 
@@ -47,12 +73,21 @@ function ContactPage() {
 
     if (!formData.phone.trim()) {
       newErrors.phone = 'Phone number is required';
+    } else {
+      const phoneDigits = formData.phone.replace(/\D/g, '');
+      if (phoneDigits.length !== 10) {
+        newErrors.phone = 'Please enter a valid 10-digit phone number';
+      }
     }
 
     if (!formData.message.trim()) {
       newErrors.message = 'Message is required';
     } else if (formData.message.trim().length < 10) {
       newErrors.message = 'Message must be at least 10 characters';
+    }
+
+    if (!recaptchaValue) {
+      newErrors.recaptcha = "Please verify you are not a robot";
     }
 
     return newErrors;
@@ -105,6 +140,7 @@ function ContactPage() {
       setIsSubmitting(false);
       setSubmitSuccess(true);
       setFormData({ name: '', email: '', phone: '', message: '' });
+      setRecaptchaValue(null); // Reset captcha
 
       // Reset success message after 5 seconds
       setTimeout(() => {
@@ -146,7 +182,11 @@ function ContactPage() {
 
               <div className="info-item icon-item">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="contact-icon"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                <p>123 Event St, Party City, USA</p>
+                <span>
+                  <a href="https://www.google.com/maps/place/123+Event+St,+Party+City,+USA">
+                    123 Event St, Party City, USA
+                  </a>
+                </span>
               </div>
 
               <div className="info-item business-hours">
@@ -228,6 +268,14 @@ function ContactPage() {
                     rows="4"
                   />
                   {errors.message && <span className="error-message">{errors.message}</span>}
+                </div>
+
+                <div className="form-group recaptcha-wrapper">
+                  <ReCAPTCHA
+                    sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                    onChange={handleRecaptchaChange}
+                  />
+                  {errors.recaptcha && <span className="error-message">{errors.recaptcha}</span>}
                 </div>
 
                 <button
