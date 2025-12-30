@@ -1,0 +1,17 @@
+.counter-item {
+    text-align: center;
+    flex: 1;
+}
+
+.counter-value {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--color-text);
+    line-height: 1.2;
+}
+
+.counter-label {
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    margin-top: 4px;
+}

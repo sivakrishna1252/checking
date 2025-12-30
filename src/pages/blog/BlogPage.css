@@ -1,0 +1,71 @@
+/* ===== Blog Page Styles ===== */
+.blog-page {
+  padding-top: var(--spacing-lg);
+}
+
+.blog-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.blog-intro {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--color-text);
+  margin-top: var(--spacing-md);
+}
+
+.blog-list {
+  background-color: var(--color-white);
+}
+
+/* Loading & Error States */
+.loading-container,
+.error-container,
+.no-blogs {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(160, 129, 108, 0.2);
+  border-top-color: #A0816C;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error-container h1 {
+  color: #d9534f;
+  margin-bottom: 2rem;
+}
+
+.no-blogs p {
+  font-size: 1.2rem;
+  color: #888;
+}
+
+/* Tablet Styles */
+@media (min-width: 768px) {
+  .blog-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 1024px) {
+  .blog-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+  }
+}

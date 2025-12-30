@@ -1,0 +1,233 @@
+/* ===== Blog Detail Page Styles ===== */
+.blog-detail-page {
+  padding-top: var(--spacing-lg);
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: var(--spacing-lg);
+  color: #a0816c;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  padding: 8px 16px;
+  background-color: rgba(160, 129, 108, 0.05);
+  border-radius: 30px;
+}
+
+.back-link:hover {
+  color: #BFAA8C;
+  background-color: rgba(160, 129, 108, 0.1);
+  transform: translateX(-5px);
+}
+
+.back-link svg {
+  transition: transform var(--transition-fast);
+}
+
+.back-link:hover svg {
+  transform: translateX(-3px);
+}
+
+.blog-post {
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: clamp(1.5rem, 5vw, 4rem);
+  border-radius: 15px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+}
+
+.blog-post-header {
+  margin-bottom: var(--spacing-xl);
+}
+
+.blog-post-meta {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.blog-post-header .blog-category {
+  background-color: rgba(160, 129, 108, 0.1);
+  color: #a0816c;
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.blog-post-header .blog-date {
+  color: #888;
+  font-size: 0.95rem;
+  display: block;
+  margin-top: -8px;
+  margin-bottom: 12px;
+}
+
+.blog-post-header h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: var(--spacing-md);
+  line-height: 1.2;
+  color: #2D2D2D;
+  font-weight: 700;
+}
+
+.blog-post-submeta {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 0.5rem;
+  margin-bottom: var(--spacing-md);
+}
+
+.blog-date {
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+}
+
+.blog-post-author-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.blog-author {
+  color: #666;
+  font-size: 1rem;
+  margin: 0;
+  font-style: italic;
+}
+
+.blog-post-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 3rem;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.blog-post-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.blog-post-content {
+  line-height: 1.9;
+  font-size: 1.2rem;
+  color: #444;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.blog-post-content p {
+  margin-bottom: var(--spacing-md);
+}
+
+.blog-post-tags {
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+.blog-post-tags h3 {
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-primary);
+}
+
+.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.tag {
+  background-color: var(--color-bg-light);
+  color: var(--color-primary);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.related-posts {
+  margin-top: var(--spacing-xxl);
+  background-color: var(--color-bg-light);
+  padding: var(--spacing-xl) 0;
+}
+
+.related-posts h2 {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.related-post-card {
+  background-color: var(--color-white);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  transition: transform var(--transition-normal);
+}
+
+.related-post-card:hover {
+  transform: translateY(-4px);
+}
+
+.related-post-card a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.related-post-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.related-post-card h3 {
+  padding: var(--spacing-md);
+  font-size: 1.1rem;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+/* Tablet Styles */
+@media (min-width: 768px) {
+  .blog-post {
+    padding: var(--spacing-xl);
+  }
+
+  .blog-post-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .blog-post-content {
+    font-size: 1.1rem;
+  }
+
+  .related-posts-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 1024px) {
+  .blog-post-header h1 {
+    font-size: 3rem;
+  }
+
+  .related-posts-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

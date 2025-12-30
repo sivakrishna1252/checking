@@ -1,0 +1,111 @@
+/* ===== Gallery Page Styles ===== */
+.gallery-page {
+  padding-top: var(--spacing-lg);
+}
+
+.gallery-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.gallery-intro {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--color-text);
+  margin-top: var(--spacing-md);
+}
+
+.gallery-filters {
+  background-color: #A0816C;
+  padding: var(--spacing-md) 0;
+  /* Make the filter panel rounded to match buttons */
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  box-shadow: none;
+
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  justify-content: center;
+}
+
+.filter-btn {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-white);
+  border: 2px solid var(--color-border);
+  color: var(--color-text);
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  /* unified radius */
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  min-height: 44px;
+  /* Touch-friendly */
+  min-width: 100px;
+}
+
+.filter-btn:hover {
+  border-color: #BFAA8C;
+  color: #BFAA8C;
+}
+
+.filter-btn.active {
+  background-color: #BFAA8C;
+  border-color: #BFAA8C;
+  color: var(--color-white);
+}
+
+/* Ensure active state also keeps same radius */
+.filter-btn.active,
+.filter-btn:focus {
+  border-radius: 8px;
+}
+
+.gallery-content {
+  background-color: var(--color-white);
+  padding: var(--spacing-xl) 0;
+  /* padding: var(--spacing-xl) var(--spacing-md);
+  max-width: 100%;
+} */
+}
+
+.gallery-content .image-gallery {
+  margin-top: var(--spacing-lg);
+  width: 100%;
+}
+
+.gallery-page .gallery-content.section {
+
+  /* .gallery-page .container { */
+  max-width: 100%;
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
+}
+
+/* Mobile: Gallery content spacing */
+@media (max-width: 767px) {
+  .gallery-content {
+    padding: var(--spacing-lg) 0;
+  }
+
+  .gallery-content .image-gallery {
+    margin-top: var(--spacing-md);
+  }
+}
+
+/* Tablet Styles */
+@media (min-width: 768px) {
+  .filter-buttons {
+    gap: var(--spacing-md);
+  }
+
+  .filter-btn {
+    font-size: 1rem;
+    padding: var(--spacing-sm) var(--spacing-lg);
+  }
+}

@@ -1,0 +1,81 @@
+/* ===== Services Page Styles ===== */
+.services-page {
+  padding-top: var(--spacing-lg);
+}
+
+.services-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.services-intro {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--color-text);
+  margin-top: var(--spacing-md);
+}
+
+.services-list {
+  background-color: var(--color-white);
+}
+
+.services-grid {
+  margin-bottom: var(--spacing-xl);
+}
+
+.services-cta {
+  background-color: var(--color-bg-light);
+  text-align: center;
+}
+
+.cta-content h2 {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-primary);
+}
+
+.cta-content p {
+  font-size: 1.1rem;
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Tablet Styles */
+@media (min-width: 768px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+  }
+
+  .cta-content h2 {
+    font-size: 2.5rem;
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 1024px) {
+  .services-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-xl);
+  }
+
+  .cta-content h2 {
+    font-size: 3rem;
+  }
+}
+
+.services-page .services-preview {
+  background-color: #E8DED1;
+  margin: 0 -1rem;
+  /* Adjust for container padding if needed */
+  padding: var(--spacing-xl) 0;
+}
+
+.services-page .cta-content .section-subtitle {
+  color: var(--color-text-light) !important;
+}
+
+.services-page .cta-content .section-title {
+  color: var(--color-text) !important;
+}
