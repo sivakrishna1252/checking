@@ -1,5 +1,5 @@
 
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { mockServices } from '../../data/mockServices';
 import { mockBlogPosts } from '../../data/mockBlogPosts';
@@ -8,75 +8,64 @@ import ServiceCard from '../../components/sections/Services/ServiceCard';
 import BlogCard from '../../components/sections/Blog/BlogCard';
 import Counter from '../../components/sections/Counter/Counter';
 import './HomePage.css';
-import useEmblaCarousel from 'embla-carousel-react';
-import Autoplay from 'embla-carousel-autoplay';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+// Swiper Imports
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
+import { ArrowUp, ChevronLeft, ChevronRight } from 'lucide-react';
 
 function HomePage() {
-  // Get first 6 services for carousel (more than 4 to show sliding)
+  // Get first 6 services for carousel
   const featuredServices = mockServices.slice(0, 6);
 
-  // Autoplay plugin ref for controlling pause/resume
-  const autoplayRef = useRef(
-    Autoplay({ delay: 3000, stopOnInteraction: false, playOnInit: true })
-  );
+  // Swiper Navigation Refs
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
 
-  // Embla Carousel setup
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    {
-      loop: true,
-      align: 'start',
-      slidesToScroll: 1,      // Scroll exactly one slide at a time
-      skipSnaps: false,        // Don't skip any slides
-      containScroll: 'trimSnaps'  // Ensure proper snapping behavior
-    },
-    [autoplayRef.current]
-  );
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState([]);
+  // Ref for Swiper instance to update navigation after init
+  const swiperRef = useRef(null);
 
-  const onInit = useCallback((emblaApi) => {
-    setScrollSnaps(emblaApi.scrollSnapList());
-  }, []);
+  // Scroll to Top State
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
-  const onSelect = useCallback((emblaApi) => {
-    setSelectedIndex(emblaApi.selectedScrollSnap());
-  }, []);
-
+  // Handle Scroll Visibility
   useEffect(() => {
-    if (!emblaApi) return;
-
-    onInit(emblaApi);
-    onSelect(emblaApi);
-    emblaApi.on('reInit', onInit);
-    emblaApi.on('reInit', onSelect);
-    emblaApi.on('select', onSelect);
-
-    // Add hover listeners to pause/resume autoplay
-    const emblaNode = emblaApi.rootNode();
-    const handleMouseEnter = () => {
-      if (autoplayRef.current) {
-        autoplayRef.current.stop();
-      }
-    };
-    const handleMouseLeave = () => {
-      if (autoplayRef.current) {
-        autoplayRef.current.play();
+    const handleScroll = () => {
+      // Show button if scrolled more than 500px (approx after hero)
+      if (window.scrollY > 500) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
       }
     };
 
-    emblaNode.addEventListener('mouseenter', handleMouseEnter);
-    emblaNode.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-    return () => {
-      emblaNode.removeEventListener('mouseenter', handleMouseEnter);
-      emblaNode.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, [emblaApi, onInit, onSelect]);
+  // Update swiper navigation when refs are ready
+  // This helps when refs are initially null
+  useEffect(() => {
+    if (swiperRef.current && swiperRef.current.swiper) {
+      const swiper = swiperRef.current.swiper;
+      swiper.params.navigation.prevEl = prevRef.current;
+      swiper.params.navigation.nextEl = nextRef.current;
+      swiper.navigation.init();
+      swiper.navigation.update();
+    }
+  }, []);
 
-  const scrollTo = useCallback((index) => {
-    if (emblaApi) emblaApi.scrollTo(index);
-  }, [emblaApi]);
+  // Scroll to Top Action
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   // Get latest 3 blog posts
   const featuredBlogs = mockBlogPosts.slice(0, 4);
@@ -141,41 +130,69 @@ function HomePage() {
           </div>
         </section>
 
-        {/* Services Preview Section (Carousel) */}
+        {/* Services Preview Section (Swiper Carousel) */}
         <section className="services-preview section">
           <div className="container">
             <h2 className="section-title">Our Services</h2>
             {/* <p className="section-subtitle">Comprehensive event management solutions tailored to your needs</p> */}
 
             <div className="services-carousel-wrapper">
-              <button className="carousel-arrow prev" onClick={() => emblaApi && emblaApi.scrollPrev()}>
-                <ChevronLeft size={24} />
+              <button ref={prevRef} className="custom-prev" aria-label="Previous slide">
+                <ChevronLeft size={28} />
               </button>
-              <div className="services-carousel embla" ref={emblaRef}>
-                <div className="embla__container">
-                  {featuredServices.map((service) => (
-                    <div className="embla__slide" key={service.id}>
-                      <ServiceCard service={service} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <button className="carousel-arrow next" onClick={() => emblaApi && emblaApi.scrollNext()}>
-                <ChevronRight size={24} />
+
+              <Swiper
+                ref={swiperRef}
+                modules={[Autoplay, Pagination, Navigation]}
+                spaceBetween={30} // Add gap between slides
+                slidesPerView={1}
+                loop={true}
+                speed={800}
+                autoplay={{
+                  delay: 3000,
+                  disableOnInteraction: false,
+                  pauseOnMouseEnter: true,
+                }}
+                pagination={{
+                  clickable: true,
+                  dynamicBullets: true,
+                }}
+                navigation={{
+                  prevEl: prevRef.current,
+                  nextEl: nextRef.current,
+                }}
+                onBeforeInit={(swiper) => {
+                  swiper.params.navigation.prevEl = prevRef.current;
+                  swiper.params.navigation.nextEl = nextRef.current;
+                }}
+                breakpoints={{
+                  640: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                  },
+                  768: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                  },
+                  1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                  },
+                }}
+                className="services-carousel"
+              >
+                {featuredServices.map((service) => (
+                  <SwiperSlide key={service.id}>
+                    <ServiceCard service={service} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+
+              <button ref={nextRef} className="custom-next" aria-label="Next slide">
+                <ChevronRight size={28} />
               </button>
             </div>
 
-            {/* Pagination Dots */}
-            <div className="embla__dots">
-              {scrollSnaps.map((_, index) => (
-                <button
-                  key={index}
-                  className={`embla__dot ${index === selectedIndex ? 'embla__dot--selected' : ''} `}
-                  onClick={() => scrollTo(index)}
-                  aria-label={`Go to slide ${index + 1} `}
-                />
-              ))}
-            </div>
 
             <div className="section-cta">
               <Link to="/contact" className="btn btn-primary">Contact Us Today</Link>
@@ -210,6 +227,15 @@ function HomePage() {
           </div>
         </section>
       </div>
+
+      {/* Scroll to Top Button */}
+      <button
+        className={`scroll-to-top ${showScrollTop ? 'visible' : ''}`}
+        onClick={scrollToTop}
+        aria-label="Scroll to top"
+      >
+        <ArrowUp size={24} />
+      </button>
     </>
   );
 }

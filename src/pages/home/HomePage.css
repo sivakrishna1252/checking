@@ -156,153 +156,144 @@
     padding: var(--spacing-xl) 0;
 }
 
-/* ===== Embla Carousel Styles ===== */
-.embla {
-    overflow: hidden;
-    padding: var(--spacing-sm) 0;
+/* ===== Swiper Carousel Styles ===== */
+.swiper {
+    width: 100%;
+    padding-bottom: 50px !important;
+    /* Space for pagination */
     flex: 1;
-    /* Take full space between arrows */
+    /* Allow swiper to take available space */
 }
 
-.embla__container {
+.swiper-slide {
+    height: auto;
     display: flex;
-    gap: 0;
-    /* remove flex gap - slides will have symmetric padding instead */
-    user-select: none;
-    -webkit-touch-callout: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    touch-action: pan-y;
-    -webkit-tap-highlight-color: transparent;
+    justify-content: center;
 }
 
-.embla__slide {
-    box-sizing: border-box;
-    padding: 0 10px;
-    flex: 0 0 100%;
-    min-width: 0;
-}
-
-/* Carousel wrapper with arrows */
 .services-carousel-wrapper {
     position: relative;
+    max-width: 1300px;
+    /* Increased to accommodate outside arrows */
+    margin: 0 auto;
+    padding: 0 40px;
+    /* Padding for arrows on desktop */
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 0 1rem;
+    gap: 20px;
 }
 
-.carousel-arrow {
-    background: white;
-    border: none;
-    width: 44px;
-    height: 44px;
+/* Custom Navigation Buttons */
+.custom-prev,
+.custom-next {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: transparent;
+    border: 2px solid #A0816C;
+    /* Gold border */
+    color: #A0816C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    z-index: 10;
+}
+
+.custom-prev:hover,
+.custom-next:hover {
+    background: #A0816C;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(160, 129, 108, 0.3);
+}
+
+/* Disabled state */
+.custom-prev.swiper-button-disabled,
+.custom-next.swiper-button-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: #E8DED1;
+    color: #E8DED1;
+}
+
+.custom-prev.swiper-button-disabled:hover,
+.custom-next.swiper-button-disabled:hover {
+    background: transparent;
+    color: #E8DED1;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Custom Pagination */
+.swiper-pagination-bullet {
+    width: 10px !important;
+    height: 10px !important;
+    background: #F0EBE3 !important;
+    opacity: 1 !important;
+    transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+    background: #8b6b5b !important;
+    transform: scale(1.2);
+}
+
+/* Scroll to Top Button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #8b6b5b;
+    /* Vibrant Pink from hero highlight */
+    color: white;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    z-index: 10;
-    transition: all 0.3s ease;
-    color: var(--color-text);
+  
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: none;
 }
 
-.carousel-arrow:hover {
-    background: #A0816C;
-    color: white;
+.scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+    background-color: #8b6b5b;
+    transform: translateY(-5px);
+ 
 }
 
 @media (max-width: 768px) {
-    .carousel-arrow {
-        display: none;
-        /* Hide arrows on mobile to keep it neat */
-    }
-
     .services-carousel-wrapper {
         padding: 0;
         gap: 0;
     }
-}
 
-/* Mobile Gap */
-@media (max-width: 767px) {
-    .embla__slide {
-        padding: 0 16px;
-        flex: 0 0 100%;
-        /* One card fully visible */
-        flex-shrink: 0;
+    .custom-prev,
+    .custom-next {
+        display: none;
+        /* Hide custom arrows on mobile */
     }
 
-    .hero-title {
-        font-size: 32px !important;
-        line-height: 37px !important;
-        letter-spacing: 0.15em;
-    }
-
-    .highlight {
-        font-size: 37px !important;
-        line-height: 37px !important;
-        vertical-align: middle;
-    }
-
-    .embla__slide {
-        padding: 0 8px;
-        flex: 0 0 100%;
-    }
-
-
-}
-
-/* Pagination Dots */
-.embla__dots {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    /* "china china ga" - small gap */
-    margin-top: var(--spacing-xl);
-}
-
-.embla__dot {
-    width: 8px;
-    /* Small dots */
-    height: 8px;
-    border-radius: 50%;
-    border: none;
-    background-color: #F0EBE3;
-    cursor: pointer;
-    padding: 0;
-    transition: all var(--transition-normal);
-}
-
-.embla__dot--selected {
-    background-color: #8b6b5b;
-    /* Active dot color */
-    transform: scale(1.3);
-    /* Slightly larger */
-}
-
-/* Tablet Styles */
-@media (min-width: 768px) {
-    .embla__container {
-        gap: 0;
-    }
-
-    .embla__slide {
-        padding: 0 10px;
-        flex: 0 0 50%;
-        flex-shrink: 0;
-    }
-}
-
-/* Desktop Styles */
-@media (min-width: 1024px) {
-    .embla__slide {
-        padding: 0 12px;
-        flex: 0 0 33.333%;
-        flex-shrink: 0;
+    .scroll-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
     }
 }
 
